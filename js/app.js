@@ -11,20 +11,26 @@
 
     nidc.items = [];
 
+    nidc.displayWarning = false;
+    nidc.warning = "";
+
     nidc.clickResponse = function(){
       nidc.items = [];
       if(nidc.input == undefined || nidc.input == ""){
-        alert("You must type something in the box")
+        nidc.displayWarning = true;
+        nidc.warning = "You must type something in the box";
       }else{
         var promise = menuSearchService.getMatchedMenuItems(nidc.input);
         promise.then(function (response) {
           for(var i = 0; i<response.data.menu_items.length; i++){
             if(response.data.menu_items[i].description.toLowerCase().indexOf(nidc.input.toLowerCase())!=-1){
                 nidc.items.push(response.data.menu_items[i]);
+                nidc.displayWarning = false;
             }
           }
           if(nidc.items.length == 0){
-            alert("Nothing found")
+            nidc.warning = "No foods match that descption";
+            nidc.displayWarning = true;
           }
         })
         .catch(function (error) {

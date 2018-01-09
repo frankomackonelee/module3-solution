@@ -23,7 +23,8 @@
       </div>
   </div>
   <br>
-    <div>
+    <div ng-if="nidc.displayWarning"><h4 class="text-warning">{{nidc.warning}}</h4></div>
+    <div ng-if="!nidc.displayWarning">
         <found-items
           found="nidc.items"
           on-remove=nidc.removeItem(position)>
